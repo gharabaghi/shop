@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
@@ -11,11 +10,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Product
 {
-     /**
-     * @var \DateTime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
-     */
+    /**
+    * @var \DateTime
+    * @Gedmo\Timestampable(on="create")
+    * @ORM\Column(type="datetime")
+    */
     protected $createdAt;
 
     /**
@@ -23,8 +22,8 @@ class Product
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
-    protected $updatedAt;    
-    
+    protected $updatedAt;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -164,5 +163,10 @@ class Product
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    public function increaseVisit()
+    {
+        $this->visit = $this->visit + 1;
     }
 }
