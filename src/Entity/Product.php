@@ -12,6 +12,8 @@ use Gedmo\Timestampable\Traits\Timestampable;
 class Product
 {
     use Timestampable;
+
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -25,9 +27,9 @@ class Product
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
-    private $image;
+    private $imageId;
 
     /**
      * @ORM\Column(type="integer")
@@ -61,14 +63,14 @@ class Product
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImageId(): ?int
     {
-        return $this->image;
+        return $this->imageId;
     }
 
-    public function setImage(string $image): self
+    public function setImageId(int $imageId): self
     {
-        $this->image = $image;
+        $this->imageId = $imageId;
 
         return $this;
     }
