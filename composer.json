@@ -14,6 +14,7 @@
         "doctrine/orm": "^2.9",
         "gedmo/doctrine-extensions": "^3.1",
         "knplabs/knp-paginator-bundle": "^5.6",
+        "stof/doctrine-extensions-bundle": "^1.6",
         "symfony/asset": "5.3.*",
         "symfony/config": "5.3.*",
         "symfony/console": "5.3.*",
