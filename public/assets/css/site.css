@@ -1,4 +1,80 @@
-.center{
-    display: flex;
-    justify-content: center;
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-bg {
+  background: url("../images/space-nav.jpg");
+  background-size: 80%;
+}
+
+.dropdown-menu,
+.dropdown-menu.show {
+  right: 0;
+}
+
+.space-brand {
+  color: #fff;
+  font-weight: bold;
+}
+
+.nav-profile-img {
+  width: 50px;
+  border: 1px solid #fff;
+}
+
+/* LOGIN REGISTRATION */
+
+.form-container {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+
+.inactive {
+  border-color: lightgray lightgray lightgray;
+  background: darkgray;
+  color: #fff;
+}
+
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+  color: #efefee;
+}
+
+/* ADVERTISEMENT */
+
+.ad-space {
+  background: #fff;
+  border-radius: 5px;
+  border-top: 5px solid green;
+}
+
+.advertisement-img {
+  width: 150px;
+  height: auto;
+  border: 2px solid #efefee;
+  border-radius: 5px;
+}
+
+.advertisement-text {
+  font-weight: bold;
+}
+
+.quote-space {
+  background: #fff;
+  margin-top: 30px;
+  border-radius: 5px;
+  border-top: 5px solid hotpink;
+}
+
+#user_register_form {
+  width: 400px;
+  margin: 0 auto;
+}
+
+form[name="user_register_form"] button{
+    display:block;
+    margin: 20px auto;
 }

@@ -3,6 +3,9 @@ twig:
     globals:
         Market: '@App\Service\MarketService'
 
+    form_themes:
+        ['bootstrap_4_layout.html.twig']
+
 when@test:
     twig:
         strict_variables: true
