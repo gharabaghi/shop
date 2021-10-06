@@ -69,12 +69,12 @@
   border-top: 5px solid hotpink;
 }
 
-#user_register_form {
+#user_register_form, .login-form {
   width: 400px;
   margin: 0 auto;
 }
 
-form[name="user_register_form"] button{
+form[name="user_register_form"] button, .login-form button{
     display:block;
     margin: 20px auto;
 }

@@ -6,13 +6,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
     /**
      * @Route("/user/register", name= "user_register")
      */
-    public function register(EntityManagerInterface $em, Request $request)
+    public function register(EntityManagerInterface $em, Request $request, UserPasswordHasherInterface $hasher)
     {
         $form = $this->createForm(UserRegisterFormType::class);
 
@@ -20,6 +21,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
+            $user->setPassword($hasher->hashPassword($user,$user->getPassword()));
             $em->persist($user);
             $em->flush();
         }
