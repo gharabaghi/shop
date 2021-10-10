@@ -52,14 +52,20 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="integer", options={"defalult":0})
+     * @ORM\Column(type="integer")
      */
     private $visit;
 
     /**
-     * @ORM\Column(type="integer", options={"defalult":0})
+     * @ORM\Column(type="integer")
      */
     private $count;
+
+    public function __construct()
+    {
+        $this->visit = 0;
+        $this->count = 0;
+    }
 
     public function getId(): ?int
     {

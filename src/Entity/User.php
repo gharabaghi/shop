@@ -232,7 +232,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->cards->contains($card)) {
             $this->cards[] = $card;
-            $card->setUserId($this);
+            $card->setUser($this);
         }
 
         return $this;
@@ -242,8 +242,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->cards->removeElement($card)) {
             // set the owning side to null (unless already changed)
-            if ($card->getUserId() === $this) {
-                $card->setUserId(null);
+            if ($card->getUser() === $this) {
+                $card->setUser(null);
             }
         }
 
