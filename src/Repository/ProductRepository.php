@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Repository;
 
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,37 +14,66 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
+    private QueryBuilder $qb;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Product::class);
+        $this->initailizeQueryBuilderInstance();
     }
 
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Initializing $this->qb
+     *
+     * @return ProductRepository
+     */
+    public function initailizeQueryBuilderInstance()
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->qb = $this->createQueryBuilder('p');
+        return $this;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Product
+    /**
+     * Add andWhere to $this->qb
+     *
+     * @return ProductRepository
+     */
+    public function qbFindAllAvailableProducts()
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $this->qb = $this->qb->andWhere('p.count > 0');
+        return $this;
     }
-    */
+
+    /**
+     * Add orderBy to $this->qb
+     *
+     * @return ProductRepository
+     */
+    public function qbOrderBy(string $col, $order = null)
+    {
+        $col = 'p.'.$col;
+        $this->qb = $this->qb->orderBy($col, $order);
+        return $this;
+    }
+
+    /**
+     * Add limit to $this->qb
+     *
+     * @return ProductRepository
+     */
+    public function qbLimit(int $maxResult)
+    {
+        $this->qb = $this->qb->setMaxResults($maxResult);
+        return $this;
+    }
+
+    /**
+     * executes the Product[]
+     *
+     * @return ProductRepository
+     */
+    public function qbGetResult()
+    {
+        return $this->qb->getQuery()->getResult();
+    }
 }

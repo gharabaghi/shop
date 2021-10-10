@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,18 +16,18 @@ class SiteController extends AbstractController
     public function index(ProductRepository $productRepo, PaginatorInterface $paginator, Request $request): Response
     {
         $pagination = $paginator->paginate(
-            $productRepo->findAll(),
+            $productRepo->initailizeQueryBuilderInstance()->qbFindAllAvailableProducts()->qbGetResult(),
             $request->query->getInt('page', 1),
             16
         );
 
-        $latests = $productRepo->findBy([],['createdAt'=>'DESC'],8);
-        $populars = $productRepo->findBy([],['visit'=>'DESC'],8);
+        $latests = $productRepo->initailizeQueryBuilderInstance()->qbFindAllAvailableProducts()->qbLimit(8)->qbOrderBy('createdAt', 'DESC')->qbGetResult();
+        $populars = $productRepo->initailizeQueryBuilderInstance()->qbFindAllAvailableProducts()->qbLimit(8)->qbOrderBy('visit', 'DESC')->qbGetResult();
 
         return $this->render('index.html.twig', [
             'pagination' => $pagination,
-            'latests'=>$latests,
-            'populars'=>$populars,
+            'latests' => $latests,
+            'populars' => $populars,
         ]);
     }
 }
