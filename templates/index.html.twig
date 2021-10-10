@@ -3,23 +3,75 @@
 {% block head %}
 {% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slick.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slick-theme.css') }}"/>
+
+{% endblock %}
+
 {% block body %}
 
 
 	<!-- Section-->
 	<section class="py-5">
+
+
 		<div class="container px-4 px-lg-5 mt-5">
-			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+
+			<div class="row">
+
+				<div class="col-xs-12">
+					<h3 class="text-center">
+						Latest Products
+					</h3>
+				</div>
+
+				<div class="slider">
+
+					{% for pr in latests %}
+
+						<div class="slider-item">
+							<div class="card h-100">
+								<img class="card-img-top" src="{{ Market.getImageUrl(pr.imageId,268,268) }}" alt="..."/>
+								<div class="card-body p-4">
+									<div class="text-center">
+										<h5 class="fw-bolder">
+											{{ pr.name }}
+										</h5>
+										{{ pr.price| format_currency('USD') }}
+									</div>
+								</div>
+								<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+									<div class="text-center">
+										<a class="btn btn-outline-dark mt-auto" href="{{path('product_show',{id: pr.id}) }}">
+											Details
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+
+			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center pr-list">
+
+			<div class="col-xs-12 pr-list-header">
+					<h3 class="text-center">
+						Our Products
+					</h3>
+				</div>
 				{% for pr in pagination %}
 
 					<div class="col mb-5">
-						<div
-							class="card h-100">
-							<img
-							class="card-img-top" src="{{ Market.getImageUrl(pr.imageId,268,268) }}" alt="..."/>
+						<div class="card h-100">
+							<img class="card-img-top" src="{{ Market.getImageUrl(pr.imageId,268,268) }}" alt="..."/>
 							<div class="card-body p-4">
-								<div
-									class="text-center">
+								<div class="text-center">
 									<h5 class="fw-bolder">
 										{{ pr.name }}
 									</h5>
@@ -39,8 +91,8 @@
 			</div>
 		</div>
 		<div class="navigation center">
-    {{ knp_pagination_render(pagination) }}
-</div>
+			{{ knp_pagination_render(pagination) }}
+		</div>
 	</section>
 	<footer class="py-5 bg-dark">
 		<div class="container">
@@ -49,4 +101,48 @@
 			</p>
 		</div>
 	</footer>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="{{asset('assets/js/slick.min.js') }}"></script>
+	<script>
+
+
+		$( document ).ready( function ()
+{
+
+
+
+
+
+$( '.slider' ).slick( {
+
+
+
+
+
+arrows: true,
+slidesToShow: 4,
+slidesToScroll: 1,
+autoplay: true,
+infinite: true,
+autoplaySpeed: 2000,
+prevArrow: '<a class="carousel-control-prev"  role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only"></span></a>',
+nextArrow: '<a class="carousel-control-next" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only"></span></a>'
+
+
+
+
+
+} );
+
+
+
+
+
+} );
+	</script>
 {% endblock %}

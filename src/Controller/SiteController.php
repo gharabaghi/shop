@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,8 +22,11 @@ class SiteController extends AbstractController
             16
         );
 
+        $latests = $productRepo->findBy([],['createdAt'=>'DESC'],8);
+
         return $this->render('index.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'latests'=>$latests
         ]);
     }
 }

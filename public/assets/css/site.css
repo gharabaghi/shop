@@ -69,12 +69,42 @@
   border-top: 5px solid hotpink;
 }
 
-#user_register_form, .login-form {
+#user_register_form,
+.login-form {
   width: 400px;
   margin: 0 auto;
 }
 
-form[name="user_register_form"] button, .login-form button{
-    display:block;
-    margin: 20px auto;
+form[name="user_register_form"] button,
+.login-form button {
+  display: block;
+  margin: 20px auto;
+}
+
+.slider-item {
+  margin: 25px;
+  /* max-height: 422px; */
+}
+
+.slider {
+  /* border-bottom: solid 1px #dbdee5; */
+  background: #f7f7f7;
+  border-radius: 22px;
+  padding: 30px 0;
+  margin-bottom: 50px;
+}
+
+.fw-bolder {
+  height: 50px;
+  max-height: 50px;
+  overflow: auto;
+}
+
+.pr-list-header {
+  width: 100%;
+  margin: 22px auto;
+}
+
+.pr-list{
+  margin-top: 50px;
 }
