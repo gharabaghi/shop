@@ -52,9 +52,14 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"defalult":0})
      */
     private $visit;
+
+    /**
+     * @ORM\Column(type="integer", options={"defalult":0})
+     */
+    private $count;
 
     public function getId(): ?int
     {
@@ -168,5 +173,17 @@ class Product
     public function increaseVisit()
     {
         $this->visit = $this->visit + 1;
+    }
+
+    public function getCount(): ?int
+    {
+        return $this->count;
+    }
+
+    public function setCount(int $count): self
+    {
+        $this->count = $count;
+
+        return $this;
     }
 }

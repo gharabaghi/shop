@@ -23,10 +23,12 @@ class SiteController extends AbstractController
         );
 
         $latests = $productRepo->findBy([],['createdAt'=>'DESC'],8);
+        $populars = $productRepo->findBy([],['visit'=>'DESC'],8);
 
         return $this->render('index.html.twig', [
             'pagination' => $pagination,
-            'latests'=>$latests
+            'latests'=>$latests,
+            'populars'=>$populars,
         ]);
     }
 }

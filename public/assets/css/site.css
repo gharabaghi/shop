@@ -94,7 +94,7 @@ form[name="user_register_form"] button,
   margin-bottom: 50px;
 }
 
-.fw-bolder {
+.pr-list-title {
   height: 50px;
   max-height: 50px;
   overflow: auto;
@@ -107,4 +107,9 @@ form[name="user_register_form"] button,
 
 .pr-list{
   margin-top: 50px;
+}
+
+.slick-arrow{
+  width: 40px;
+  filter: invert(100%);
 }

@@ -29,6 +29,8 @@
 					</h3>
 				</div>
 
+
+				{# latest products #}
 				<div class="slider">
 
 					{% for pr in latests %}
@@ -38,7 +40,44 @@
 								<img class="card-img-top" src="{{ Market.getImageUrl(pr.imageId,268,268) }}" alt="..."/>
 								<div class="card-body p-4">
 									<div class="text-center">
-										<h5 class="fw-bolder">
+										<h5 class="fw-bolder pr-list-title">
+											{{ pr.name }}
+										</h5>
+										{{ pr.price| format_currency('USD') }}
+									</div>
+								</div>
+								<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+									<div class="text-center">
+										<a class="btn btn-outline-dark mt-auto" href="{{path('product_show',{id: pr.id}) }}">
+											Details
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+
+			{# most viewed products #}
+			<div class="row">
+
+				<div class="col-xs-12">
+					<h3 class="text-center">
+						Most Viewed Products
+					</h3>
+				</div>
+				<div class="slider">
+
+					{% for pr in populars %}
+
+						<div class="slider-item">
+							<div class="card h-100">
+								<img class="card-img-top" src="{{ Market.getImageUrl(pr.imageId,268,268) }}" alt="..."/>
+								<div class="card-body p-4">
+									<div class="text-center">
+										<h5 class="fw-bolder pr-list-title">
 											{{ pr.name }}
 										</h5>
 										{{ pr.price| format_currency('USD') }}
@@ -60,7 +99,7 @@
 
 			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center pr-list">
 
-			<div class="col-xs-12 pr-list-header">
+				<div class="col-xs-12 pr-list-header">
 					<h3 class="text-center">
 						Our Products
 					</h3>
@@ -72,7 +111,7 @@
 							<img class="card-img-top" src="{{ Market.getImageUrl(pr.imageId,268,268) }}" alt="..."/>
 							<div class="card-body p-4">
 								<div class="text-center">
-									<h5 class="fw-bolder">
+									<h5 class="fw-bolder pr-list-title">
 										{{ pr.name }}
 									</h5>
 									{{ pr.price| format_currency('USD') }}
@@ -102,7 +141,6 @@
 		</div>
 	</footer>
 {% endblock %}
-
 {% block javascripts %}
 	{{ parent() }}
 
