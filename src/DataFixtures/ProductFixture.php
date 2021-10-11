@@ -16,7 +16,9 @@ class ProductFixture extends BaseFixture
             ->setVisit($this->faker->numberBetween(10,400))
             ->setDescription($this->faker->realText(500))
             ->setImageId($this->faker->numberBetween(1,999))
-            ->setPrice($this->faker->numberBetween(220,99999)*$this->faker->randomElement([10,100,1000]));
+            ->setPrice($this->faker->numberBetween(220,99999)*$this->faker->randomElement([10,100,1000]))
+            ->setCount($this->faker->numberBetween(0,100))
+            ;
 
             return $product;
         });

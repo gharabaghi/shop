@@ -45,13 +45,26 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
+        * Add andWhere to $this->qb
+        *
+        * @return ProductRepository
+        */
+    public function qbSearch(string $phrase)
+    {
+        $phrase = '%' . $phrase . '%';
+        $this->qb->setParameter('phrase',$phrase);
+        $this->qb = $this->qb->andWhere('p.name LIKE :phrase OR p.description LIKE :phrase OR p.price LIKE :phrase');
+        return $this;
+    }
+
+    /**
      * Add orderBy to $this->qb
      *
      * @return ProductRepository
      */
     public function qbOrderBy(string $col, $order = null)
     {
-        $col = 'p.'.$col;
+        $col = 'p.' . $col;
         $this->qb = $this->qb->orderBy($col, $order);
         return $this;
     }

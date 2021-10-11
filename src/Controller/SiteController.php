@@ -15,8 +15,28 @@ class SiteController extends AbstractController
      */
     public function index(ProductRepository $productRepo, PaginatorInterface $paginator, Request $request): Response
     {
+        $search = $request->query->get('search');
+        $sort = $request->query->get('sort');
+
+        $direction = $request->query->get('direction');
+        $direction = in_array($direction, ['DESC', 'ASC']) ? $direction : 'DESC';
+
+        $target = $productRepo->initailizeQueryBuilderInstance()->qbFindAllAvailableProducts();
+
+        //search products
+        if ($search) {
+            $target = $target->qbSearch($search);
+        }
+
+        //sort products
+        $sortArray = ['price', 'creaeteAt', 'name', 'visit'];
+        if (in_array($sort, $sortArray)) {
+            $target = $target->qbOrderBy($sort, $direction);
+        }
+
+        $target = $target->qbGetResult();
         $pagination = $paginator->paginate(
-            $productRepo->initailizeQueryBuilderInstance()->qbFindAllAvailableProducts()->qbGetResult(),
+            $target,
             $request->query->getInt('page', 1),
             16
         );

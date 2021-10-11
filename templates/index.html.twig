@@ -96,7 +96,6 @@
 				</div>
 			</div>
 
-
 			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center pr-list">
 
 				<div class="col-xs-12 pr-list-header">
@@ -104,6 +103,77 @@
 						Our Products
 					</h3>
 				</div>
+				<form class="w-100 py-5">
+					<div class="row align-items-center">
+
+						<div class="col-1 px-0">
+							<label>
+								Search:
+							</label>
+						</div>
+
+						<div class="col-3">
+							<input type="text" id="search" class="form-control" placeholder="Search in name, description and price" value={{ app.request.query.get('search') }}>
+
+						</div>
+
+						<div class="col-1 px-0 d-flex flex-row-reverse">
+							<label>
+								Sort:
+							</label>
+						</div>
+						<div class="col-2">
+							<select class="form-select" aria-label="Default select example" id="sort">
+								{% if (app.request.query.get('sort') == false) %}
+
+									<option value="" readonly="true" hidden="true" selected>
+										Sort Filter
+									</option>
+								{% endif %}
+								<option value="price" {% if(app.request.query.get('sort')  == 'price') %} selected {% endif %}>
+									Price
+								</option>
+								<option value="createdAt" {% if(app.request.query.get('sort')  == 'createdAt') %} selected {% endif %}>
+									Date
+								</option>
+								<option value="name" {% if(app.request.query.get('sort')   == 'name') %} selected {% endif %}>
+									Name
+								</option>
+							</select>
+						</div>
+
+						<div class="col-1 px-0 d-flex flex-row-reverse">
+							<label>
+								Direction:
+							</label>
+						</div>
+						<div class="col-2 pl-0">
+							<select class="form-select" aria-label="Default select example" id="direction">
+								{% if (app.request.query.get('direction') == false) %}
+
+									<option value="" readonly="true" hidden="true" selected>
+										Direction
+									</option>
+								{% endif %}
+								<option value="ASC" {% if(app.request.query.get('direction') == 'ASC')  %} selected {% endif %}>
+									Ascending
+								</option>
+								<option value="DESC" {% if(app.request.query.get('direction') == 'DESC')  %} selected {% endif %}>
+									Descending
+								</option>
+							</select>
+						</div>
+
+						<div class="col-2">
+							<button type="submit" class="btn btn-primary w-50" id="filter">
+								Filter
+							</button>
+						</div>
+					</div>
+
+				</form>
+
+
 				{% for pr in pagination %}
 
 					<div class="col mb-5">
@@ -146,41 +216,5 @@
 
 	<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="{{asset('assets/js/slick.min.js') }}"></script>
-	<script>
-
-
-		$( document ).ready( function ()
-{
-
-
-
-
-
-$( '.slider' ).slick( {
-
-
-
-
-
-arrows: true,
-slidesToShow: 4,
-slidesToScroll: 1,
-autoplay: true,
-infinite: true,
-autoplaySpeed: 2000,
-prevArrow: '<a class="carousel-control-prev"  role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only"></span></a>',
-nextArrow: '<a class="carousel-control-next" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only"></span></a>'
-
-
-
-
-
-} );
-
-
-
-
-
-} );
-	</script>
+	<script type="text/javascript" src="{{asset('assets/js/index.js') }}"></script>
 {% endblock %}
