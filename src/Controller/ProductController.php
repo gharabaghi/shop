@@ -18,11 +18,11 @@ class ProductController extends AbstractController
         $product->increaseVisit();
         $em->flush();
 
-        $recentProducts = $productRepo->findBy([], ['createdAt'=> 'DESC'], 4);
+        $similarProducts = $productRepo->findBy([], ['createdAt'=> 'DESC'], 4);
 
         return $this->render('product.html.twig', [
             'product' => $product,
-            'recentProducts' => $recentProducts
+            'similarProducts' => $similarProducts
         ]);
     }
 }

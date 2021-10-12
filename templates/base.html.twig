@@ -22,6 +22,8 @@
 			<!-- Core theme CSS (includes Bootstrap)-->
 			<link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet"/>
 			<link href="{{ asset('assets/css/site.css') }}" rel="stylesheet"/>
+
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		{% endblock %}
 	</head>
 	<body>
@@ -30,76 +32,52 @@
 				<a class="navbar-brand" href="{{ path('index') }}">
 					market
 				</a>
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="{{path('index')}}">
+								Home
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('about_us') }}">
+								About
+							</a>
+						</li>
+						
+						{% if is_granted('ROLE_USER') == false %}
+
 							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" href="#!">
-									Home
+								<a class="nav-link" href="{{ path('app_login') }}">
+									Login
 								</a>
 							</li>
+
 							<li class="nav-item">
-								<a class="nav-link" href="#!">
-									About
+								<a class="nav-link" href="{{ path('app_register') }}">
+									Register
 								</a>
 							</li>
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Shop
+						{% endif %}
+						{% if is_granted('ROLE_USER') %}
+
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('app_logout') }}">
+									Logout
 								</a>
-								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-									<li>
-										<a class="dropdown-item" href="#!">
-											All Products
-										</a>
-									</li>
-									<li>
-										<hr class="dropdown-divider"/>
-									</li>
-									<li>
-										<a class="dropdown-item" href="#!">
-											Popular Items
-										</a>
-									</li>
-									<li>
-										<a class="dropdown-item" href="#!">
-											New Arrivals
-										</a>
-									</li>
-								</ul>
 							</li>
-							{% if is_granted('ROLE_USER') == false %}
-
-								<li class="nav-item">
-									<a class="nav-link" href="{{ path('app_login') }}">
-										Login
-									</a>
-								</li>
-
-								<li class="nav-item">
-									<a class="nav-link" href="{{ path('app_register') }}">
-										Register
-									</a>
-								</li>
-							{% endif %}
-							{% if is_granted('ROLE_USER') %}
-
-								<li class="nav-item">
-									<a class="nav-link" href="{{ path('app_logout') }}">
-										Logout
-									</a>
-								</li>
-							{% endif %}
-						</ul>
-						<form class="d-flex">
-							<button class="btn btn-outline-dark" type="submit">
-								<i class="bi-cart-fill me-1"></i>
-								Cart
-								<span class="badge bg-dark text-white ms-1 rounded-pill">
-									0
-								</span>
-							</button>
-						</form>
-					</div>
+						{% endif %}
+					</ul>
+					<a href="{{path('card')}}">
+						<button class="btn btn-outline-dark" type="submit">
+							<i class="bi-cart-fill me-1"></i>
+							Cart
+							<span class="badge bg-dark text-white ms-1 rounded-pill">
+								{{ app.session.get("CARD") | length }}
+							</span>
+						</button>
+					</a>
+				</div>
 			</div>
 		</nav>
 		<header class="bg-dark py-5" style="background-image: url('{{asset('assets/image/main.jpg')}}');">
@@ -115,15 +93,38 @@
 			</div>
 		</header>
 
-		{% block body %}
-		{% endblock %}
 
 
-		{% block javascripts %}
-			<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-		{% endblock %}
+	
+		<section class="py-5">
+			<div class="container px-4 px-lg-5 my-5">
+			
+				{% for message in app.flashes('message') %}
+			<div class="alert alert-info" id="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
+			 {% block body %}{% endblock %}
+				</div>
+			</section>
 
-	</body>
-</html>
+			{% block footer %}
+				<footer class="py-5 bg-dark">
+					<div class="container">
+						<p class="m-0 text-center text-white">
+							Copyright &copy; Nesyeh Market 2021
+						</p>
+					</div>
+				</footer>
+			{% endblock %}
+
+
+			{% block javascripts %}
+				<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+				{# <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> #}
+				{# <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> #}
+				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+			{% endblock %}
+		</body>
+	</html>
+</body></html>

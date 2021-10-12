@@ -63,7 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $postalCode;
 
     /**
-     * @ORM\OneToMany(targetEntity=Card::class, mappedBy="userId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Card::class, mappedBy="user", orphanRemoval=true)
      */
     private $cards;
 

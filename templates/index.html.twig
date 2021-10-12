@@ -1,8 +1,5 @@
 {% extends "base.html.twig" %}
 
-{% block head %}
-{% endblock %}
-
 {% block stylesheets %}
 	{{ parent() }}
 
@@ -130,13 +127,13 @@
 										Sort Filter
 									</option>
 								{% endif %}
-								<option value="price" {% if(app.request.query.get('sort')  == 'price') %} selected {% endif %}>
+								<option value="price" {% if(app.request.query.get('sort') == 'price') %} selected {% endif %}>
 									Price
 								</option>
-								<option value="createdAt" {% if(app.request.query.get('sort')  == 'createdAt') %} selected {% endif %}>
+								<option value="createdAt" {% if(app.request.query.get('sort') == 'createdAt') %} selected {% endif %}>
 									Date
 								</option>
-								<option value="name" {% if(app.request.query.get('sort')   == 'name') %} selected {% endif %}>
+								<option value="name" {% if(app.request.query.get('sort') == 'name') %} selected {% endif %}>
 									Name
 								</option>
 							</select>
@@ -155,10 +152,10 @@
 										Direction
 									</option>
 								{% endif %}
-								<option value="ASC" {% if(app.request.query.get('direction') == 'ASC')  %} selected {% endif %}>
+								<option value="ASC" {% if(app.request.query.get('direction') == 'ASC') %} selected {% endif %}>
 									Ascending
 								</option>
-								<option value="DESC" {% if(app.request.query.get('direction') == 'DESC')  %} selected {% endif %}>
+								<option value="DESC" {% if(app.request.query.get('direction') == 'DESC') %} selected {% endif %}>
 									Descending
 								</option>
 							</select>
@@ -203,14 +200,8 @@
 			{{ knp_pagination_render(pagination) }}
 		</div>
 	</section>
-	<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">
-				Copyright &copy; Your Website 2021
-			</p>
-		</div>
-	</footer>
 {% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
 

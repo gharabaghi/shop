@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Hello CardController!
+{% endblock %}
+
+{% block body %}
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">
+					#
+				</th>
+				<th scope="col">
+					Product
+				</th>
+				<th scope="col">
+					Count
+				</th>
+				<th scope="col">
+					Remove
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in items %}
+				<tr>
+					<th scope="row">
+						{{i.id}}
+					</th>
+					<td>
+						{{ i.product.name }}
+					</td>
+					<td>
+						<form action="{{path('update_card',{id: i.id}) }}" method="post" class="form-row ">
+							<div class="col-2 d-inline-block">
+								<input class="form-control col-2" value="{{ i.count }}" name="count"/>
+							</div>
+							<div class="col-2 d-inline-block">
+
+								<button type="submit" class="btn btn-primary">
+									Change
+								</button>
+							</div>
+						</form>
+					</td>
+					<td>
+						<form action="{{ path('delete_from_card', {id: i.id}) }}" method="post">
+							<button type="submit" class="btn btn-danger">
+								Remove
+							</button>
+						</form>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

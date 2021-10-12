@@ -38,7 +38,7 @@ class SiteController extends AbstractController
         $pagination = $paginator->paginate(
             $target,
             $request->query->getInt('page', 1),
-            16
+            $this->getParameter('app.index_page.per_page')
         );
 
         $latests = $productRepo->initailizeQueryBuilderInstance()->qbFindAllAvailableProducts()->qbLimit(8)->qbOrderBy('createdAt', 'DESC')->qbGetResult();
@@ -49,5 +49,13 @@ class SiteController extends AbstractController
             'latests' => $latests,
             'populars' => $populars,
         ]);
+    }
+
+    /**
+     * @Route("/about-us", name="about_us")
+     */
+    public function aboutUs()
+    {
+        return $this->render('about-us.html.twig');
     }
 }
