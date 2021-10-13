@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Entity\User;
 use App\Service\UserSessionManage;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,9 +28,15 @@ class CardController extends AbstractController
      */
     private $validator;
 
-    public function __construct(ValidatorInterface $validator)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(ValidatorInterface $validator, LoggerInterface $logger)
     {
         $this->validator = $validator;
+        $this->logger = $logger;
     }
 
     /**
@@ -99,6 +106,7 @@ class CardController extends AbstractController
         /** @var User $user*/
         $user = $this->getUser();
         if (!$this->userHasAccessToCard($user, $card)) {
+            $this->logger->critical('User: '.$user->getId().'tries to access cards belong to user:'.$card->getUser()->getId());
             throw $this->createAccessDeniedException('sdfsf');
         }
 
@@ -125,6 +133,7 @@ class CardController extends AbstractController
         $user = $this->getUser();
 
         if (!$this->userHasAccessToCard($user, $card)) {
+            $this->logger->critical('User: '.$user->getId().'tries to access cards belong to user:'.$card->getUser()->getId());
             throw $this->createAccessDeniedException('sdfsf');
         }
 
