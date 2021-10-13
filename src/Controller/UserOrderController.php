@@ -9,14 +9,20 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Card;
 use App\Service\UserSessionManage;
+use Symfony\Component\HttpFoundation\Request;
+use App\Service\AppSecurity;
 
 class UserOrderController extends AbstractController
 {
+    use AppSecurity;
+
     /**
      * @Route("/user/order", name="user_make_order", methods={"post"})
      */
-    public function order(EntityManagerInterface $em, UserSessionManage $sm)
+    public function order(EntityManagerInterface $em, UserSessionManage $sm, Request $request)
     {
+        $this->checkCsrfToken('user-make-order', $request);
+
         /** @var User  */
         $user = $this->getUser();
 

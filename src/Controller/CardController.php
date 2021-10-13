@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Service\AppSecurity;
 
 // use symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -23,6 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class CardController extends AbstractController
 {
+    use AppSecurity;
     /**
      * @var ValidatorInterface
      */
@@ -60,6 +62,8 @@ class CardController extends AbstractController
      */
     public function add(Product $product, EntityManagerInterface $em, Request $request, UserSessionManage $sessionManage, RequestStack $rs)
     {
+        $this->checkCsrfToken('user-add-card-item', $request);
+
         $validationResult = $this->validateCardRequest($request);
         if ($validationResult !== true) {
             $this->addFlash('message', $validationResult);
@@ -98,6 +102,8 @@ class CardController extends AbstractController
      */
     public function update(Card $card, EntityManagerInterface $em, Request $request, UserSessionManage $sessionManage)
     {
+        $this->checkCsrfToken('user-update-card-item', $request);
+
         $validationResult = $this->validateCardRequest($request);
         if ($validationResult !== true) {
             $this->addFlash('message', $validationResult);
@@ -126,8 +132,10 @@ class CardController extends AbstractController
     /**
      * @Route("deleteCard/{id}", methods={"post"}, name="delete_from_card")
      */
-    public function remove(Card $card, EntityManagerInterface $em, UserSessionManage $sessionManage)
+    public function remove(Card $card, EntityManagerInterface $em, UserSessionManage $sessionManage, Request $request)
     {
+        $this->checkCsrfToken('user-delete-card-item', $request);
+
         /**
          * @var User $user
          */
@@ -162,6 +170,7 @@ class CardController extends AbstractController
     {
         $constraints = new Assert\Collection([
             'count' => [new Assert\Regex("/^\d*$/"), new Assert\Positive()],
+            'token'=>[new Assert\Type('string')]
         ]);
 
         $violations = $this->validator->validate($request->request->all(), $constraints);

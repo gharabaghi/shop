@@ -34,6 +34,8 @@
 					</td>
 					<td>
 						<form action="{{path('update_card',{id: i.id}) }}" method="post" class="form-row ">
+							<input type="hidden" name="token" value="{{ csrf_token('user-update-card-item') }}"/>
+
 							<div class="col-2 d-inline-block">
 								<input class="form-control col-2" value="{{ i.count }}" name="count"/>
 							</div>
@@ -47,6 +49,8 @@
 					</td>
 					<td>
 						<form action="{{ path('delete_from_card', {id: i.id}) }}" method="post">
+							<input type="hidden" name="token" value="{{ csrf_token('user-delete-card-item') }}"/>
+
 							<button type="submit" class="btn btn-danger">
 								Remove
 							</button>
@@ -59,7 +63,7 @@
 	</table>
 
 	<form method="post" action="{{ path('user_make_order') }}">
-		<input type="hidden" name="token" value="{{ csrf_token('user-order') }}"/>
+		<input type="hidden" name="token" value="{{ csrf_token('user-make-order') }}"/>
 		<div class="col-2">
 			<button type="submit" class="btn btn-primary">
 				Order
