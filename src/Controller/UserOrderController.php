@@ -41,7 +41,7 @@ class UserOrderController extends AbstractController
 
             if ($itemCount > $product->getCount()) {
                 $em->getConnection()->rollBack();
-                $this->addFlash('message', 'We have just ' . $product->getCount() . 'from product ' . $product->getName() . '. Please change the item and trye again');
+                $this->addFlash('message', 'We have just ' . $product->getCount() . ' items from product ' . $product->getName() . '. Please change the item and trye again');
                 return $this->redirect($this->generateUrl('card'));
             }
 
@@ -49,6 +49,7 @@ class UserOrderController extends AbstractController
             $orderItem->setOrder($order)->setProduct($product)->setCount($itemCount);
 
             $price += $product->getPrice() * $itemCount;
+            $product->decreaseCount($itemCount);
 
             $em->remove($c);
             $em->persist($orderItem);
@@ -65,5 +66,34 @@ class UserOrderController extends AbstractController
 
         $this->addFlash('message', 'Order Completed');
         return $this->redirect($this->generateUrl('index'));
+    }
+
+    /**
+     * @Route("/user/order", name="user_orders", methods={"get"})
+     */
+    public function index()
+    {
+        /**
+         * @var Card[]
+         */
+        $orders = $this->getUser()->getOrders();
+
+        return $this->render('user_order/index.html.twig', [
+            'orders' => $orders]);
+    }
+
+    /**
+    * @Route("/user/order/{id}", name="user_order", methods={"get"})
+    */
+    public function show(Order $order)
+    {
+        $user = $this->getUser();
+        if ($user->getId() != $order->getUser()->getId()) {
+            $this->logger->critical('User: ' . $user->getId() . ' tries to access order belong to user:' . $order->getUser()->getId());
+            throw $this->createAccessDeniedException('You don\' have access to this resource.');
+        }
+
+        return $this->render('user_order/show.html.twig', [
+            'order' => $order]);
     }
 }

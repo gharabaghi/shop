@@ -230,4 +230,9 @@ class Product
 
         return $this;
     }
+
+    public function decreaseCount($count = 1)
+    {
+        $this->count = $this->count - $count;
+    }
 }

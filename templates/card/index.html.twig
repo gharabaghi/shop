@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Hello CardController!
+	Card Items
 {% endblock %}
 
 {% block body %}
@@ -27,7 +27,7 @@
 			{% for i in items %}
 				<tr>
 					<th scope="row">
-						{{i.id}}
+						{{ loop.index }}
 					</th>
 					<td>
 						{{ i.product.name }}

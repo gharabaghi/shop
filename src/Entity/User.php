@@ -68,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $cards;
 
     /**
-     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="userId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="user", orphanRemoval=true)
      */
     private $orders;
 

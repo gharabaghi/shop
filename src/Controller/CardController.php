@@ -84,6 +84,12 @@ class CardController extends AbstractController
 
         $count = $request->request->get('count');
 
+        if ($count > $product->getCount()) {
+            $this->addFlash('message', 'We have just ' . $product->getCount() . ' items from product '
+                . $product->getName() . '. Please change the item and trye again');
+            return $this->redirect($this->generateUrl('product_show', ['id' => $product->getId()]));
+        }
+
         $card = new Card();
         $card->setCount($count)->setUser($user)->setProduct($product);
 
@@ -113,8 +119,8 @@ class CardController extends AbstractController
         /** @var User $user*/
         $user = $this->getUser();
         if (!$this->userHasAccessToCard($user, $card)) {
-            $this->logger->critical('User: ' . $user->getId() . 'tries to access cards belong to user:' . $card->getUser()->getId());
-            throw $this->createAccessDeniedException('sdfsf');
+            $this->logger->critical('User: ' . $user->getId() . ' tries to access cards belong to user:' . $card->getUser()->getId());
+            throw $this->createAccessDeniedException('You don\' have access to this resource.');
         }
 
         $count = $request->request->get('count');
@@ -142,8 +148,8 @@ class CardController extends AbstractController
         $user = $this->getUser();
 
         if (!$this->userHasAccessToCard($user, $card)) {
-            $this->logger->critical('User: ' . $user->getId() . 'tries to access cards belong to user:' . $card->getUser()->getId());
-            throw $this->createAccessDeniedException('sdfsf');
+            $this->logger->critical('User: ' . $user->getId() . ' tries to access cards belong to user:' . $card->getUser()->getId());
+            throw $this->createAccessDeniedException('You don\' have access to this resource.');
         }
 
         $em->remove($card);
@@ -170,7 +176,7 @@ class CardController extends AbstractController
     {
         $constraints = new Assert\Collection([
             'count' => [new Assert\Regex("/^\d*$/"), new Assert\Positive()],
-            'token'=>[new Assert\Type('string')]
+            'token' => [new Assert\Type('string')]
         ]);
 
         $violations = $this->validator->validate($request->request->all(), $constraints);

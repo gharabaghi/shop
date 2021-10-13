@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Orders
+{% endblock %}
+
+{% block body %}
+<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">
+					#
+				</th>
+				<th scope="col">
+					Product
+				</th>
+				<th scope="col">
+					Count
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in order.orderItems %}
+				<tr>
+					<th scope="row">
+						{{ loop.index }}
+					</th>
+					<td>
+                        <a href="{{ path('product_show', {id: i.product.id}) }}">{{ i.product.name }} </a>
+					</td>
+					<td>
+						{{ i.count }}
+					</td>					
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
