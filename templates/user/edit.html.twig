@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}
+	Register new user
+{% endblock %}
+
+{% block body %}
+{{ form_start(UserEditForm) }}
+{{form_widget(UserEditForm)}}
+<button type="submit" class="btn btn-primary">
+	Update!
+</button>
+{{form_end(UserEditForm) }}
+{% endblock %}

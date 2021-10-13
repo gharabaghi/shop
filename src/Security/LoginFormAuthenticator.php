@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Security;
 
+use App\Service\UserSessionManage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,9 +25,15 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    /**
+     * @var UserSessionManage
+     */
+    private UserSessionManage $sm;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator, UserSessionManage $sm)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->sm = $sm;
     }
 
     public function authenticate(Request $request): PassportInterface
@@ -51,6 +57,8 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
+
+        $this->sm->rebuildSessionItem(UserSessionManage::USER_SESSION_KEY_CARD);
 
         return new RedirectResponse($this->urlGenerator->generate('index'));
     }

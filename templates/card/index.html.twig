@@ -53,8 +53,18 @@
 						</form>
 					</td>
 				</tr>
+
 			{% endfor %}
 		</tbody>
 	</table>
+
+	<form method="post" action="{{ path('user_make_order') }}">
+		<input type="hidden" name="token" value="{{ csrf_token('user-order') }}"/>
+		<div class="col-2">
+			<button type="submit" class="btn btn-primary">
+				Order
+			</button>
+		</div>
+	</form>
 
 {% endblock %}

@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CardController extends AbstractController
 {
     /**
-     * @var ValidatorInterface 
+     * @var ValidatorInterface
      */
     private $validator;
 
@@ -86,6 +86,7 @@ class CardController extends AbstractController
         $em->persist($card);
         $em->flush();
 
+        $em->refresh($user);
         $sessionManage->rebuildSessionItem(UserSessionManage::USER_SESSION_KEY_CARD);
 
         $this->addFlash('message', 'Added to your card');
@@ -106,7 +107,7 @@ class CardController extends AbstractController
         /** @var User $user*/
         $user = $this->getUser();
         if (!$this->userHasAccessToCard($user, $card)) {
-            $this->logger->critical('User: '.$user->getId().'tries to access cards belong to user:'.$card->getUser()->getId());
+            $this->logger->critical('User: ' . $user->getId() . 'tries to access cards belong to user:' . $card->getUser()->getId());
             throw $this->createAccessDeniedException('sdfsf');
         }
 
@@ -133,7 +134,7 @@ class CardController extends AbstractController
         $user = $this->getUser();
 
         if (!$this->userHasAccessToCard($user, $card)) {
-            $this->logger->critical('User: '.$user->getId().'tries to access cards belong to user:'.$card->getUser()->getId());
+            $this->logger->critical('User: ' . $user->getId() . 'tries to access cards belong to user:' . $card->getUser()->getId());
             throw $this->createAccessDeniedException('sdfsf');
         }
 
