@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Product;
+use App\Service\AppCache;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -22,6 +23,9 @@ class ProductFixture extends BaseFixture
 
             return $product;
         });
+
+        $this->appCache->reCacheItem(AppCache::APP_CACHE_KEY_RECENT_PRODUCTS);
+        $this->appCache->reCacheItem(AppCache::APP_CACHE_KEY_MOST_VIEWED_PRODUCTS);
         
         $manager->flush();
     }

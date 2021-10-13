@@ -1,6 +1,7 @@
 <?php
 namespace App\DataFixtures;
 
+use App\Service\AppCache;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -16,7 +17,19 @@ abstract class BaseFixture extends Fixture
 
     private $referencesIndex = [];
 
+    /**
+     * Undocumented variable
+     *
+     * @var AppCache
+     */
+    protected $appCache;
+
     abstract protected function loadData(ObjectManager $em);
+
+    public function __construct(AppCache $appCache)
+    {
+        $this->appCache = $appCache;
+    }
 
     public function load(ObjectManager $manager)
     {
