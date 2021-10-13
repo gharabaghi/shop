@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Repository\ProductRepository;
+use App\Service\AppCache;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,7 @@ class SiteController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(ProductRepository $productRepo, PaginatorInterface $paginator, Request $request): Response
+    public function index(ProductRepository $productRepo, PaginatorInterface $paginator, Request $request, AppCache $appCache): Response
     {
         $search = $request->query->get('search');
         $sort = $request->query->get('sort');
@@ -41,8 +42,8 @@ class SiteController extends AbstractController
             $this->getParameter('app.index_page.per_page')
         );
 
-        $latests = $productRepo->initailizeQueryBuilderInstance()->qbFindAllAvailableProducts()->qbLimit(8)->qbOrderBy('createdAt', 'DESC')->qbGetResult();
-        $populars = $productRepo->initailizeQueryBuilderInstance()->qbFindAllAvailableProducts()->qbLimit(8)->qbOrderBy('visit', 'DESC')->qbGetResult();
+        $latests = $appCache->getCacheItem(AppCache::APP_CACHE_KEY_RECENT_PRODUCTS);
+        $populars = $appCache->getCacheItem(AppCache::APP_CACHE_KEY_MOST_VIEWED_PRODUCTS);
 
         return $this->render('index.html.twig', [
             'pagination' => $pagination,

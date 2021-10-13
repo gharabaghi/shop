@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     app.index_page.per_page: 16
+    app.index_page.recent_products_count: 8
+    app.index_page.newest_products_count: 8
 
 services:
     # default configuration for services in *this* file
