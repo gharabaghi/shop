@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CardController extends AbstractController
 {
     /**
-     * @var ValidatorInterface $validator
+     * @var ValidatorInterface 
      */
     private $validator;
 

@@ -53,6 +53,19 @@ class AppCache
     }
 
     /**
+     * Looking for cache items. if each one doesn't exist will rebuild the cache item. finally returns true.
+     *
+     * @return bool
+     */
+    public function cacheAllItems()
+    {
+        $this->recacheMostViewedProducts();
+        $this->recacheRecentProducts();
+
+        return true;
+    }
+
+    /**
      * Deleting cache item and the rebuild that. finally returns cache item.
      *
      * @param string $key
