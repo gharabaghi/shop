@@ -105,6 +105,7 @@ class CardController extends AbstractController
 
     /**
      * @Route("/updateCard/{id}", methods={"post"}, name="update_card")
+     * @isGranted("CARD_UPDATE_ITEM", subject="card")
      */
     public function update(Card $card, EntityManagerInterface $em, Request $request, UserSessionManage $sessionManage)
     {
@@ -114,13 +115,6 @@ class CardController extends AbstractController
         if ($validationResult !== true) {
             $this->addFlash('message', $validationResult);
             return $this->redirect($this->generateUrl('card'));
-        }
-
-        /** @var User $user*/
-        $user = $this->getUser();
-        if (!$this->userHasAccessToCard($user, $card)) {
-            $this->logger->critical('User: ' . $user->getId() . ' tries to access cards belong to user:' . $card->getUser()->getId());
-            throw $this->createAccessDeniedException('You don\' have access to this resource.');
         }
 
         $count = $request->request->get('count');
@@ -137,21 +131,13 @@ class CardController extends AbstractController
 
     /**
      * @Route("deleteCard/{id}", methods={"post"}, name="delete_from_card")
+     * @isGranted("CARD_DELETE_ITEM", subject="card")
+     * 
      */
     public function remove(Card $card, EntityManagerInterface $em, UserSessionManage $sessionManage, Request $request)
     {
         $this->checkCsrfToken('user-delete-card-item', $request);
-
-        /**
-         * @var User $user
-         */
-        $user = $this->getUser();
-
-        if (!$this->userHasAccessToCard($user, $card)) {
-            $this->logger->critical('User: ' . $user->getId() . ' tries to access cards belong to user:' . $card->getUser()->getId());
-            throw $this->createAccessDeniedException('You don\' have access to this resource.');
-        }
-
+        
         $em->remove($card);
         $em->flush();
 
