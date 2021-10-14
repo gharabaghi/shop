@@ -90,14 +90,14 @@
 								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									Admin
 								</a>
-						{% if is_granted('ROLE_ADMIN') %}
+								{% if is_granted('ROLE_ADMIN_PRODUCT') %}
 
-								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-									<a class="dropdown-item" href="{{path('admin_products') }}">
-										Products
-									</a>
-								</div>
-						{% endif %}
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<a class="dropdown-item" href="{{path('admin_products') }}">
+											Products
+										</a>
+									</div>
+								{% endif %}
 							</li>
 						{% endif %}
 					</ul>
@@ -160,7 +160,8 @@
 
 
 		{% macro dd(name) %}
-			ddddf {{ name }}
+			ddddf
+			{{ name }}
 		{% endmacro %}
 
 	</body>

@@ -38,7 +38,7 @@ class UserFixture extends BaseFixture
             ->setEmail('admin_' . $i.'@example.com')
             ->setBirthDate(new DateTime($this->faker->date()))
             ->setAddress($this->faker->address)
-            ->setRoles(['ROLE_ADMIN'])
+            ->setRoles(['ROLE_ADMIN','ROLE_ADMIN_PRODUCT'])
             ->setPostalCode($this->faker->numberBetween(1111111111, 9999999999))
             ->setPassword($this->hasher->hashPassword($user, 'test'));
 
