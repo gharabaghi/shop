@@ -68,6 +68,11 @@ class Product
      */
     private $orderItems;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Card::class, mappedBy="product", orphanRemoval=true)
+     */
+    private $cards;
+
     public function __construct()
     {
         $this->visit = 0;
@@ -234,5 +239,35 @@ class Product
     public function decreaseCount($count = 1)
     {
         $this->count = $this->count - $count;
+    }
+
+    /**
+    * @return Collection|Card[]
+    */
+    public function getCards(): Collection
+    {
+        return $this->cards;
+    }
+
+    public function addCard(Card $card): self
+    {
+        if (!$this->cards->contains($card)) {
+            $this->cards[] = $card;
+            $card->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCard(Card $card): self
+    {
+        if ($this->cards->removeElement($card)) {
+            // set the owning side to null (unless already changed)
+            if ($card->getProduct() === $this) {
+                $card->setProduct(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% import "macro/form.html.twig" as forms %}
 
 {% block title %}
 	Card Items
@@ -34,7 +35,7 @@
 					</td>
 					<td>
 						<form action="{{path('update_card',{id: i.id}) }}" method="post" class="form-row ">
-							<input type="hidden" name="token" value="{{ csrf_token('user-update-card-item') }}"/>
+							{{ forms.csrf_input('user-update-card-item') }}
 
 							<div class="col-2 d-inline-block">
 								<input class="form-control col-2" value="{{ i.count }}" name="count"/>
@@ -49,7 +50,7 @@
 					</td>
 					<td>
 						<form action="{{ path('delete_from_card', {id: i.id}) }}" method="post">
-							<input type="hidden" name="token" value="{{ csrf_token('user-delete-card-item') }}"/>
+							{{ forms.csrf_input('user-delete-card-item') }}
 
 							<button type="submit" class="btn btn-danger">
 								Remove

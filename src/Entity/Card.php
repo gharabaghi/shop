@@ -22,13 +22,13 @@ class Card
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="cards")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE",nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Product::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="cards", cascade={"remove"})
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     private $product;
 

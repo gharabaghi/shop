@@ -1,5 +1,5 @@
 {% extends "base.html.twig" %}
-
+{% import "macro/form.html.twig" as forms %}
 
 {% block title %}
 	{{ product.name }}
@@ -31,7 +31,7 @@
 			</p>
 			<div class="d-flex">
 				<form action="{{path('add_to_card',{id: product.id})}}" method="post" class="form-linline">
-					<input type="hidden" name="token" value="{{ csrf_token('user-add-card-item') }}"/>
+					{{ forms.csrf_input('user-add-card-item') }}
 
 					<input name="count" class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem"/>
 					<button class="btn btn-outline-dark flex-shrink-0" type="submit">

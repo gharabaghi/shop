@@ -28,7 +28,7 @@ class OrderItem
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="orderItems")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE",nullable=false)
      */
     private $product;
 

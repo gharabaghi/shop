@@ -1,0 +1,87 @@
+{% extends "base.html.twig" %}
+{% import "macro/form.html.twig" as forms %}
+
+{% block title %}
+	{{ product.name }}
+{% endblock %}
+
+{% block body %}
+	
+	<div class="row gx-4 gx-lg-5 align-items-center">
+		<div class="col-md-6">
+			<img class="card-img-top mb-5 mb-md-0" src="{{ Market.getImageUrl(product.imageId,588,588) }}" alt="..."/>
+		</div>
+		<div class="col-md-6">
+			<h1 class="display-5 fw-bolder">
+				{{ product.name}}
+			</h1>
+			<div class="fs-5 mb-5">
+				<span>
+					{{ product.price | format_currency('USD')}}
+				</span>
+			</div>
+			<p class="lead">
+				{{ product.description}}
+			</p>
+		</div>
+
+		<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">
+					Id
+				</th>
+				<th scope="col">
+					Name
+				</th>
+				<th scope="col">
+					Price
+				</th>
+				<th scope="col">
+					Count
+				</th>
+			<th scope="col">
+					Visits
+				</th>
+			<th scope="col">
+					Created At
+				</th>
+			<th scope="col">
+					Updated At
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+				<tr>
+					<td>
+						{{ product.id }}
+					</td>
+					<td>
+						{{ product.name }}
+					</td>
+					<td>
+						{{ product.price }}
+					</td>
+					<td>
+						{{ product.count }}
+					</td>
+					<td>
+						{{ product.visit }}
+					</td>
+					<td>
+						{{ product.createdAt | date('Y-m-d H:i') }}
+					</td>
+					<td>
+						{{ product.updatedAt | date('Y-m-d H:i') }}
+					</td>
+					
+					
+				</tr>
+
+		</tbody>
+	</table>
+
+	</div>
+</div></section><section class="py-5 bg-light">
+
+{% endblock %}

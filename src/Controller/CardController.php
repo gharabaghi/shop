@@ -158,7 +158,7 @@ class CardController extends AbstractController
     /**
      * @return bool|string
      */
-    private function validateCardRequest($request)
+    private function validateCardRequest(Request $request)
     {
         $constraints = new Assert\Collection([
             'count' => [new Assert\Regex("/^\d*$/"), new Assert\Positive()],
